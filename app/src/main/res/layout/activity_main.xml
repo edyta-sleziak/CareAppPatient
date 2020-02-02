@@ -11,7 +11,7 @@
 
         android:id="@+id/ToDo"
         android:layout_width="200dp"
-        android:layout_height="340dp"
+        android:layout_height="300dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -23,7 +23,6 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Notes"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/callEmergencyNumber"
         app:layout_constraintVertical_bias="0.0" />
@@ -31,27 +30,26 @@
     <Button
         android:id="@+id/callEmergencyNumber"
         android:layout_width="200dp"
-        android:layout_height="340dp"
+        android:layout_height="300dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="#4CAF50"
         android:drawableTop="@drawable/ic_call"
         android:paddingTop="100dp"
         android:text="@string/call"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/ToDo"
+        app:layout_constraintEnd_toStartOf="@+id/SOS"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/SOS"
         android:layout_width="200dp"
-        android:layout_height="340dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="300dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="#D35045"
         android:drawableTop="@drawable/ic_sos"
         android:paddingTop="100dp"
@@ -59,15 +57,13 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/Notes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/callEmergencyNumber"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/Notes"
         android:layout_width="200dp"
-        android:layout_height="340dp"
+        android:layout_height="300dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="44dp"
@@ -78,6 +74,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ToDo"
         app:layout_constraintTop_toBottomOf="@+id/SOS" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

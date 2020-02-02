@@ -4,5 +4,6 @@
     <string name="sos">SOS</string>
     <string name="call">Call</string>
     <string name="notes">Notes</string>
+    <string name="menu_goback">Back</string>
 
 </resources>
