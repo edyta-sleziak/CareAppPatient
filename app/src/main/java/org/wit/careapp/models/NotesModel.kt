@@ -8,6 +8,7 @@ data class NotesModel(
     var createdBy: String = "",
     var updatedDate: LocalDateTime = LocalDateTime.now(),
     var updatedBy: String = "",
-    var isActive: Boolean = true
+    var isActive: Boolean = true,
+    var userId: Long = 0
 )
 
