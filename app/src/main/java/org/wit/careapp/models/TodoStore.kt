@@ -1,5 +1,7 @@
 package org.wit.careapp.models
 
 interface TodoStore {
-    fun add(notes: NotesModel)
+    fun getAll(userId: Long): List<TodoModel>
+    fun getActiveOnly(userId: Long): List<TodoModel>
+    fun markAsDone(todoItemId: Long)
 }

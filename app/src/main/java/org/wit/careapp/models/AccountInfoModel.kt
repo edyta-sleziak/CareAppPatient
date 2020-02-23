@@ -1,6 +1,7 @@
 package org.wit.careapp.models
 
 data class AccountInfoModel(
+    var id: Long = 0,
     var email: String = "",
     var password: String = "",
     var carerName: String = "",
