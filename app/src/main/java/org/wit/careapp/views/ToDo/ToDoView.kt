@@ -1,29 +1,45 @@
 package org.wit.careapp.views.ToDo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_notes.*
 import org.jetbrains.anko.startActivityForResult
 import org.wit.careapp.R
-import org.wit.careapp.models.TodoModel
 import org.wit.careapp.views.main.MainActivity
 
 class ToDoView : AppCompatActivity() {
 
-    var todolist = ArrayList<TodoModel>()
+    private lateinit var mRecycleView: RecyclerView
+    private lateinit var mRecyclerViewAdapter: ToDoListAdapter
+    private lateinit var viewModel: ToDoListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_to_do)
-        title = "Your to-do items"
-//        todolist.add(TodoModel("item1"))
-//        todolist.add(TodoModel("item2"))
-//        todolist.add(TodoModel("item3"))
-//        todolist.add(TodoModel("item4"))
-//        todolist.add(TodoModel("item5"))
-//        todolist.add(TodoModel("item6"))
 
+        viewModel =
+            ViewModelProviders.of(this).get(ToDoListViewModel::class.java)
+
+        mRecycleView = findViewById(R.id.recyclerView_todo)
+        mRecycleView.layoutManager = LinearLayoutManager(
+            this.applicationContext, RecyclerView.VERTICAL,false)
+
+
+        viewModel.getToDoList()
+            .observe(this, Observer{ noteslist ->
+                mRecycleView.adapter =
+                    ToDoListAdapter(
+                        noteslist
+                    )
+                mRecyclerViewAdapter = ToDoListAdapter(noteslist)
+            })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

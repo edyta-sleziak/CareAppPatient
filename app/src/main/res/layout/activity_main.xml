@@ -12,7 +12,7 @@
         android:id="@+id/ToDo"
         android:layout_width="200dp"
         android:layout_height="300dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="44dp"
@@ -23,7 +23,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Notes"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/callEmergencyNumber"
         app:layout_constraintTop_toBottomOf="@+id/callEmergencyNumber"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -65,7 +65,7 @@
         android:layout_width="200dp"
         android:layout_height="300dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="44dp"
         android:backgroundTint="#FFEB3B"
         android:drawableTop="@drawable/ic_notes"
@@ -74,7 +74,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ToDo"
+        app:layout_constraintStart_toStartOf="@+id/SOS"
         app:layout_constraintTop_toBottomOf="@+id/SOS" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

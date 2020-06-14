@@ -1,24 +1,17 @@
 package org.wit.careapp.views.Notes
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_notes.*
-import kotlinx.android.synthetic.main.activity_notes.view.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
 import org.wit.careapp.R
-import org.wit.careapp.models.NotesModel
 import org.wit.careapp.views.Notes.addNote.AddNoteActivity
 import org.wit.careapp.views.main.MainActivity
 
@@ -55,5 +48,17 @@ class NotesView : AppCompatActivity(), AnkoLogger {
             intent.putExtra("note", "new note")
             startActivity(intent)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.item_cancel -> startActivityForResult<MainActivity>(0)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
