@@ -6,4 +6,18 @@
     <string name="notes">Notes</string>
     <string name="menu_goback">Back</string>
 
+<!--    Login   -->
+    <string name="hint_emailaddress">E-mail</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Log in</string>
+    <string name="btn_signup">Sign up</string>
+    <string name="hint_createaccount">Don\'t have an account?\nTo register click button below</string>
+    <string name="enter_credentials">Please provide e-mail address and password</string>
+
+<!--    Notes   -->
+    <string name="note_title">$ noteTitle</string>
+    <string name="note_content">$ noteContent</string>
+    <string name="update_date">$ updateDate</string>
+    <string name="updated_by">$ updatedBy</string>
+
 </resources>

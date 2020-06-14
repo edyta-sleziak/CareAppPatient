@@ -1,25 +1,29 @@
-package org.wit.careapp.views.Notes
+package org.wit.careapp.views.ToDo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_notes.*
 import org.jetbrains.anko.startActivityForResult
-import org.jetbrains.anko.toast
 import org.wit.careapp.R
+import org.wit.careapp.models.TodoModel
 import org.wit.careapp.views.main.MainActivity
 
-class NotesActivity : AppCompatActivity() {
+class ToDoView : AppCompatActivity() {
+
+    var todolist = ArrayList<TodoModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notes)
-        title = "Your notes"
+        setContentView(R.layout.activity_to_do)
+        title = "Your to-do items"
+//        todolist.add(TodoModel("item1"))
+//        todolist.add(TodoModel("item2"))
+//        todolist.add(TodoModel("item3"))
+//        todolist.add(TodoModel("item4"))
+//        todolist.add(TodoModel("item5"))
+//        todolist.add(TodoModel("item6"))
 
-        floatingActionButton.setOnClickListener() {
-            toast("You clicked button to add new note")
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -34,3 +38,4 @@ class NotesActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 }
+

@@ -8,8 +8,8 @@ import android.content.Intent
 import android.net.Uri
 import org.jetbrains.anko.intentFor
 import org.wit.careapp.R
-import org.wit.careapp.views.Notes.NotesActivity
-import org.wit.careapp.views.ToDo.ToDoActivity
+import org.wit.careapp.views.Notes.NotesView
+import org.wit.careapp.views.ToDo.ToDoView
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,11 +30,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         Notes.setOnClickListener {
-            startActivityForResult(intentFor<NotesActivity>(), 0)
+            startActivityForResult(intentFor<NotesView>(), 0)
         }
 
         ToDo.setOnClickListener {
-            startActivityForResult(intentFor<ToDoActivity>(), 0)
+            startActivityForResult(intentFor<ToDoView>(), 0)
         }
     }
 
