@@ -8,11 +8,17 @@ import android.content.Intent
 import android.net.Uri
 import org.jetbrains.anko.intentFor
 import org.wit.careapp.R
+import org.wit.careapp.models.SosModel
+import org.wit.careapp.models.firebase.SosFireStore
 import org.wit.careapp.views.Notes.NotesView
 import org.wit.careapp.views.ToDo.ToDoView
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class MainActivity : AppCompatActivity() {
+
+    val sosFirestore = SosFireStore()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +26,11 @@ class MainActivity : AppCompatActivity() {
 
         SOS.setOnClickListener {
             toast("You clicked SOS option")
+            val current = LocalDateTime.now()
+            val alertDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            val alertTime = current.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+            val newSosAlert = SosModel(alertDate = alertDate, alertTime = alertTime)
+            sosFirestore.runSosAlert(newSosAlert)
         }
 
         callEmergencyNumber.setOnClickListener {
