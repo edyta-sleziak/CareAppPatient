@@ -15,7 +15,6 @@ import org.wit.careapp.R
 import org.wit.careapp.views.main.MainActivity
 
 class ToDoView : AppCompatActivity() {
-
     private lateinit var mRecycleView: RecyclerView
     private lateinit var mRecyclerViewAdapter: ToDoListAdapter
     private lateinit var viewModel: ToDoListViewModel
@@ -30,7 +29,6 @@ class ToDoView : AppCompatActivity() {
         mRecycleView = findViewById(R.id.recyclerView_todo)
         mRecycleView.layoutManager = LinearLayoutManager(
             this.applicationContext, RecyclerView.VERTICAL,false)
-
 
         viewModel.getToDoList()
             .observe(this, Observer{ noteslist ->

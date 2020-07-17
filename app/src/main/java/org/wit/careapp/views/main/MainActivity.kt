@@ -6,9 +6,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import org.jetbrains.anko.intentFor
 import org.wit.careapp.R
 import org.wit.careapp.models.SosModel
+import org.wit.careapp.models.firebase.AccountInfoFireStore
 import org.wit.careapp.models.firebase.SosFireStore
 import org.wit.careapp.views.Notes.NotesView
 import org.wit.careapp.views.ToDo.ToDoView
@@ -19,6 +21,7 @@ import java.time.format.DateTimeFormatter
 class MainActivity : AppCompatActivity() {
 
     val sosFirestore = SosFireStore()
+    val accountFirestore = AccountInfoFireStore()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +38,10 @@ class MainActivity : AppCompatActivity() {
 
         callEmergencyNumber.setOnClickListener {
             toast("You clicked CALL option")
+            val number = accountFirestore.getContactNumber()
+            Log.d("number", number)
             val call = Intent(Intent.ACTION_DIAL)
-            call.data = Uri.parse("tel:0123456789")
+            call.data = Uri.parse("tel:" + number)
             startActivity(call)
         }
 

@@ -19,9 +19,8 @@ class TodoFireStore() : TodoStore {
     private var db = FirebaseDatabase.getInstance().reference
     private var userId = FirebaseAuth.getInstance().currentUser!!.uid
 
-    override fun getAll(): MutableLiveData<ArrayList<TodoModel>> {
-        fetchData()
-        return mListOfItems
+    init {
+        //fetchData()
     }
 
     override fun getActiveOnly(): MutableLiveData<ArrayList<TodoModel>> {
