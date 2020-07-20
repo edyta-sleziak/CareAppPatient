@@ -28,7 +28,12 @@ class ToDoView : AppCompatActivity() {
 
         mRecycleView = findViewById(R.id.recyclerView_todo)
         mRecycleView.layoutManager = LinearLayoutManager(
-            this.applicationContext, RecyclerView.VERTICAL,false)
+            this.applicationContext, RecyclerView.VERTICAL, false
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         viewModel.getToDoList()
             .observe(this, Observer{ noteslist ->

@@ -13,20 +13,28 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class TodoFireStore() : TodoStore {
-
     private var listOfItems = ArrayList<TodoModel>()
     private var mListOfItems = MutableLiveData<ArrayList<TodoModel>>()
     private var db = FirebaseDatabase.getInstance().reference
     private var userId = FirebaseAuth.getInstance().currentUser!!.uid
 
-    init {
-        //fetchData()
-    }
-
     override fun getActiveOnly(): MutableLiveData<ArrayList<TodoModel>> {
-        fetchData()
-        val activeItems = listOfItems.filter { n -> !n.isCompleted  }
-        mListOfItems.value = ArrayList(activeItems)
+        db.child("Users")
+            .child(userId)
+            .child("ToDoItems")
+            .orderByChild("updatedDate")
+            .addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(dataSnapshot: DatabaseError) {
+                Log.w("Database error" , "Retrieving data failed")
+            }
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                listOfItems.clear()
+                dataSnapshot.children.mapNotNullTo(listOfItems) { it.getValue<TodoModel>(TodoModel::class.java) }
+                val activeItems = listOfItems.filter { n -> !n.isCompleted  }
+                mListOfItems.postValue(ArrayList(activeItems))
+            }
+        })
+
         return mListOfItems
     }
 
@@ -41,25 +49,4 @@ class TodoFireStore() : TodoStore {
         db.child("Users").child(userId).child("ToDoItems").child(item.id).child("completed").setValue(true)
         db.child("Users").child(userId).child("ToDoItems").child(item.id).child("dateCompleted").setValue(now)
     }
-
-    fun fetchData() {
-        db.child("Users").child(userId).child("ToDoItems").orderByChild("updatedDate").addValueEventListener(object :
-            ValueEventListener {
-            override fun onCancelled(dataSnapshot: DatabaseError) {
-                Log.w("Database error" , "Retrieving data failed")
-            }
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                clear()
-                Log.d("snapshot ", "$dataSnapshot")
-                dataSnapshot.children.mapNotNullTo(listOfItems) { it.getValue<TodoModel>(
-                    TodoModel::class.java) }
-                Log.d("list ", "$listOfItems")
-            }
-        })
-    }
-
-    fun clear() {
-        listOfItems.clear()
-    }
-
 }

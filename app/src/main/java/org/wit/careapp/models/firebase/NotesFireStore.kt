@@ -76,6 +76,7 @@ class NotesFireStore() : NotesStore {
                 dataSnapshot.children.mapNotNullTo(listOfItems) { it.getValue<NotesModel>(
                     NotesModel::class.java) }
                 Log.d("list ", "$listOfItems")
+                mListOfItems.postValue(ArrayList(listOfItems))
             }
         })
     }
