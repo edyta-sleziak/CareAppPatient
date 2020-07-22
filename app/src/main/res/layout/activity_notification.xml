@@ -9,32 +9,32 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/notification_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="136dp"
         android:textColor="@android:color/white"
         android:textSize="40sp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/button_done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_green_dark"
         android:layout_marginBottom="50dp"
         android:textSize="24sp"
         android:text="Done"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/button_reschedule"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_reschedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Remind later"
