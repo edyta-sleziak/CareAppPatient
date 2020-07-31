@@ -11,7 +11,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".views.Notes.NotesView"></activity>
         <activity android:name=".views.ToDo.ToDoView" />
-        <activity android:name=".views.notification.NotificationView" />
+        <activity android:name=".views.notification.NotificationView">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.main.MainActivity"/>
+            <intent-filter>
+                <action android:name="NotificationView"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".views.Notes.addNote.AddNoteActivity" />
         <activity android:name=".views.login.LoginView"
         android:label="@string/app_name"

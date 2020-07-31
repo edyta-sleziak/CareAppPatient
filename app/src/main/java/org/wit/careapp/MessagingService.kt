@@ -6,25 +6,26 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.jetbrains.anko.intentFor
+import org.wit.careapp.models.NotificationsModel
 import org.wit.careapp.views.notification.NotificationView
+import android.os.Bundle
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MessagingService : FirebaseMessagingService() {
+
     override fun onNewToken(p0: String?) {
-        //super.onNewToken(p0)
         Log.d("Tag",p0)
-    }
-
-    override fun onMessageReceived(p0: RemoteMessage) {
-        super.onMessageReceived(p0)
-
-        val messageReceived: String = p0.data["message"]!!
-        Log.d("Message", messageReceived)
-
-        passMessageToActivity(messageReceived)
-    }
-
-    private fun passMessageToActivity(message: String) {
-        startActivity(Intent(baseContext, NotificationView::class.java))
+        super.onNewToken(p0)
 
     }
+
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        if(remoteMessage.notification != null) {
+            Log.d("FCM notification", remoteMessage.data.toString())
+        }
+    }
+
 }

@@ -1,11 +1,13 @@
 package org.wit.careapp.models
 
-import java.time.LocalDateTime
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class NotificationsModel(
-    var id: Long = 0,
+    var id: String = "",
     var notification: String = "",
-    var displayTime: LocalDateTime,
-    var completedTime: LocalDateTime,
-    var userId: Long = 0
-)
+    var displayDate: String = "",
+    var displayTime: String = "",
+    var completedTime: String = "Not completed"
+) : Parcelable
