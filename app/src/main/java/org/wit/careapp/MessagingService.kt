@@ -11,14 +11,20 @@ import org.wit.careapp.views.notification.NotificationView
 import android.os.Bundle
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import org.wit.careapp.models.firebase.AccountInfoFireStore
 
 
 class MessagingService : FirebaseMessagingService() {
 
-    override fun onNewToken(p0: String?) {
-        Log.d("Tag",p0)
-        super.onNewToken(p0)
+    val accountFirestore = AccountInfoFireStore()
+
+
+    override fun onNewToken(token: String?) {
+        Log.d("Tag",token)
+        if(token != null) {
+            accountFirestore.addToken(token)
+        }
+        super.onNewToken(token)
 
     }
 

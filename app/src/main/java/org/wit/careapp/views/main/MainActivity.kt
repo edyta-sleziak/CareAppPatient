@@ -7,6 +7,9 @@ import org.jetbrains.anko.toast
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import org.jetbrains.anko.intentFor
 import org.wit.careapp.R
 import org.wit.careapp.models.SosModel
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             val alertDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             val alertTime = current.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
             val newSosAlert = SosModel(alertDate = alertDate, alertTime = alertTime)
+
             sosFirestore.runSosAlert(newSosAlert)
         }
 
@@ -52,7 +56,19 @@ class MainActivity : AppCompatActivity() {
         ToDo.setOnClickListener {
             startActivityForResult(intentFor<ToDoView>(), 0)
         }
-    }
 
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("Token", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+                accountFirestore.addToken(token.toString())
+                Log.d("Tag token", token)
+            })
+    }
 
 }

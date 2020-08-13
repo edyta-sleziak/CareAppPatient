@@ -15,7 +15,7 @@
         android:layout_marginTop="400dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
-        android:autofillHints="test3@test.com"
+        android:autofillHints="E-mail"
         android:background="@drawable/rounded_edittext"
         android:hint="@string/hint_emailaddress"
         android:inputType="textEmailAddress"
@@ -36,7 +36,7 @@
         android:background="@drawable/rounded_edittext"
         android:hint="@string/hint_password"
         android:inputType="textPassword"
-        android:autofillHints="123456"
+        android:autofillHints="password"
         android:maxLength="25"
         android:maxLines="1"
         android:textSize="14sp"
@@ -49,30 +49,15 @@
         android:id="@+id/login"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/rounded_button"
         android:text="@string/btn_login"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/signup"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
-
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/btn_signup"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/login"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <ProgressBar
@@ -86,6 +71,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup" />
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

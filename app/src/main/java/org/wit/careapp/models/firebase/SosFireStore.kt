@@ -13,6 +13,7 @@ class SosFireStore() : SosStore {
         val key = db.child("Users").child(userId).child("SOS").push().key
         key?.let {
             sos.id = key
+            sos.userId = userId
             db.child("Users").child(userId).child("SOS").child(key).setValue(sos)
         }
     }

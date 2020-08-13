@@ -17,8 +17,12 @@ class LoginView : AppCompatActivity() {
     lateinit var context: Context
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var fireStore: AccountInfoFireStore? = null
+    var accountFirebase = AccountInfoFireStore()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (accountFirebase.getUser().isNotEmpty()) {
+            startActivity(Intent(baseContext, MainActivity::class.java))
+        }
         context = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -32,16 +36,6 @@ class LoginView : AppCompatActivity() {
                 toast(R.string.enter_credentials)
             } else {
                 doLogin(email, password)
-            }
-        }
-        signup.setOnClickListener() {
-            val email = email.text.toString()
-            val password = password.text.toString()
-
-            if (email.isEmpty() || password.isEmpty()) {
-                toast(R.string.enter_credentials)
-            } else {
-                doSignup(email, password)
             }
         }
     }
