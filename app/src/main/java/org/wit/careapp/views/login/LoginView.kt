@@ -9,7 +9,11 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.toast
 import org.wit.careapp.R
+import org.wit.careapp.models.HrModel
+import org.wit.careapp.models.LocationModel
 import org.wit.careapp.models.firebase.AccountInfoFireStore
+import org.wit.careapp.models.firebase.HrFireStore
+import org.wit.careapp.models.firebase.LocationFireStore
 import org.wit.careapp.views.main.MainActivity
 
 class LoginView : AppCompatActivity() {
@@ -17,9 +21,16 @@ class LoginView : AppCompatActivity() {
     lateinit var context: Context
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var fireStore: AccountInfoFireStore? = null
+    private val locationFirestore = LocationFireStore()
+    private val hrFireStore = HrFireStore()
     var accountFirebase = AccountInfoFireStore()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        //todo add data gathering
+        locationFirestore.add(LocationModel(0.0,0.0,0f,"xx-xx-xx xx:xx:xx"))
+        hrFireStore.add(HrModel(85,"xx-xx-xx xx:xx:xx"))
+
         if (accountFirebase.getUser().isNotEmpty()) {
             startActivity(Intent(baseContext, MainActivity::class.java))
         }

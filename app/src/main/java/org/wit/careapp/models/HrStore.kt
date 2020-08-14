@@ -1,5 +1,5 @@
 package org.wit.careapp.models
 
 interface HrStore {
-    fun add(hrValue: Int): HrModel
+    fun add(hr: HrModel)
 }
