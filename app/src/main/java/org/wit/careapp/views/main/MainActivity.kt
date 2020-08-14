@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         SOS.setOnClickListener {
-            toast("You clicked SOS option")
+            toast("SOS alert sent! Your carer is already notified")
             val current = LocalDateTime.now()
             val alertDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             val alertTime = current.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         callEmergencyNumber.setOnClickListener {
-            toast("You clicked CALL option")
+            toast("You are calling to your emergency contact")
             val number = accountFirestore.getContactNumber()
             Log.d("number", number)
             val call = Intent(Intent.ACTION_DIAL)

@@ -22,6 +22,7 @@ class ToDoView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_to_do)
+        title = "CareApp - Your to-do items"
 
         viewModel =
             ViewModelProviders.of(this).get(ToDoListViewModel::class.java)

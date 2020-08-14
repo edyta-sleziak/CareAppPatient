@@ -63,7 +63,7 @@ class AddNoteActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
-            R.id.item_cancel -> startActivityForResult<MainActivity>(0)
+            R.id.item_cancel -> startActivityForResult<NotesView>(0)
         }
         return super.onOptionsItemSelected(item)
     }

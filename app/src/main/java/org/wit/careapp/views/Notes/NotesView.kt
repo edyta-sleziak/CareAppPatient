@@ -25,6 +25,7 @@ class NotesView : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes)
+        title = "CareApp - Your notes"
 
         viewModel =
             ViewModelProviders.of(this).get(NotesViewModel::class.java)

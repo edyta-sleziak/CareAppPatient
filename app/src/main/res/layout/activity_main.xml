@@ -1,75 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#000000"
+    tools:context=".views.main.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context=".views.main.MainActivity">
+    android:orientation="vertical" >
 
-    <Button
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="0.5"
+        android:orientation="horizontal">
 
-        android:id="@+id/ToDo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="44dp"
-        android:backgroundTint="#2196F3"
-        android:drawableTop="@drawable/ic_todo"
-        android:padding="50dp"
-        android:text="@string/todo"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/callEmergencyNumber"
-        app:layout_constraintTop_toBottomOf="@+id/callEmergencyNumber"
-        app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/callEmergencyNumber"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:backgroundTint="#4CAF50"
+            android:drawableTop="@drawable/ic_call"
+            android:padding="50dp"
+            android:text="@string/call"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/callEmergencyNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="#4CAF50"
-        android:drawableTop="@drawable/ic_call"
-        android:padding="50dp"
-        android:text="@string/call"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/ToDo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/SOS"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:backgroundTint="#D35045"
+            android:drawableTop="@drawable/ic_sos"
+            android:padding="50dp"
+            android:text="@string/sos"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/SOS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="#D35045"
-        android:drawableTop="@drawable/ic_sos"
-        android:padding="50dp"
-        android:text="@string/sos"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/Notes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/callEmergencyNumber"
-        app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/Notes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="44dp"
-        android:backgroundTint="#FFEB3B"
-        android:drawableTop="@drawable/ic_notes"
-        android:padding="50dp"
-        android:text="@string/notes"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/SOS"
-        app:layout_constraintTop_toBottomOf="@+id/SOS" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="0.5"
+        android:orientation="horizontal" >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/ToDo"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:backgroundTint="#2196F3"
+            android:drawableTop="@drawable/ic_todo"
+            android:padding="50dp"
+            android:text="@string/todo"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/Notes"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:backgroundTint="#FFEB3B"
+            android:drawableTop="@drawable/ic_notes"
+            android:padding="50dp"
+            android:text="@string/notes"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+</LinearLayout>

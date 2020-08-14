@@ -19,5 +19,10 @@
     <string name="note_content">$ noteContent</string>
     <string name="update_date">$ updateDate</string>
     <string name="updated_by">$ updatedBy</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_note">Your note</string>
+    <string name="button_notes_save">Save with your changes</string>
+    <string name="button_notes_delete">Delete note</string>
+
 
 </resources>

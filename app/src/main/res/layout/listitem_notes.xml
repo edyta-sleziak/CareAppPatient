@@ -20,6 +20,8 @@
             android:layout_margin="8dp"
             android:textSize="30sp"
             android:text="@string/note_title"
+            android:justificationMode="inter_word"
+            android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
