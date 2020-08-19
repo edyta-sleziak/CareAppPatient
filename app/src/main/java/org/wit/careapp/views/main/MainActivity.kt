@@ -1,19 +1,27 @@
 package org.wit.careapp.views.main
 
+import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 import android.content.Intent
+import android.content.IntentSender
+import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import org.jetbrains.anko.intentFor
 import org.wit.careapp.R
+import org.wit.careapp.models.LocationModel
 import org.wit.careapp.models.SosModel
 import org.wit.careapp.models.firebase.AccountInfoFireStore
+import org.wit.careapp.models.firebase.LocationFireStore
 import org.wit.careapp.models.firebase.SosFireStore
 import org.wit.careapp.views.Notes.NotesView
 import org.wit.careapp.views.ToDo.ToDoView
@@ -25,10 +33,15 @@ class MainActivity : AppCompatActivity() {
 
     val sosFirestore = SosFireStore()
     val accountFirestore = AccountInfoFireStore()
+    private val locationFirestore = LocationFireStore()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        checkLocation()
 
         SOS.setOnClickListener {
             toast("SOS alert sent! Your carer is already notified")
@@ -63,12 +76,17 @@ class MainActivity : AppCompatActivity() {
                     Log.w("Token", "getInstanceId failed", task.exception)
                     return@OnCompleteListener
                 }
-
-                // Get new Instance ID token
                 val token = task.result?.token
                 accountFirestore.addToken(token.toString())
                 Log.d("Tag token", token)
             })
+    }
+
+    private fun checkLocation() {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                locationFirestore.add(LocationModel(location!!.latitude, location.longitude, 17f))
+            }
     }
 
 }
