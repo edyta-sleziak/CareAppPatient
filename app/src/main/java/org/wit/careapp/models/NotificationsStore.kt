@@ -1,7 +1,9 @@
 package org.wit.careapp.models
 
+import androidx.lifecycle.MutableLiveData
+
 interface NotificationsStore {
-    fun displayNote(noteId: Long)
-    fun markAsDone(noteId: Long)
-    fun displayLater(noteId: Long)
+    fun getData(id: String): MutableLiveData<NotificationsModel>
+    fun markAsDone(id: String)
+    fun displayLater(id: String)
 }

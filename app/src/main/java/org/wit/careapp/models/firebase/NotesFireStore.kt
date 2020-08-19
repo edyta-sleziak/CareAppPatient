@@ -33,7 +33,7 @@ class NotesFireStore() : NotesStore {
     }
     override fun getActiveNotes(): MutableLiveData<ArrayList<NotesModel>> {
         fetchData()
-        listOfItems.reverse()
+        //listOfItems.reverse()
         val activeNotes = listOfItems.filter { n -> n.isActive  }
         mListOfItems.value = ArrayList(activeNotes)
         return mListOfItems
@@ -76,6 +76,7 @@ class NotesFireStore() : NotesStore {
                 dataSnapshot.children.mapNotNullTo(listOfItems) { it.getValue<NotesModel>(
                     NotesModel::class.java) }
                 Log.d("list ", "$listOfItems")
+                listOfItems.reverse()
                 mListOfItems.postValue(ArrayList(listOfItems))
             }
         })

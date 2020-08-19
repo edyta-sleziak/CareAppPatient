@@ -9,5 +9,6 @@ data class NotificationsModel(
     var notification: String = "",
     var displayDate: String = "",
     var displayTime: String = "",
-    var completedTime: String = "Not completed"
+    var completedTime: String = "Not completed",
+    var userId: String = ""
 ) : Parcelable
