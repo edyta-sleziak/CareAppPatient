@@ -29,7 +29,7 @@ class LoginView : AppCompatActivity() {
 
         //todo add data gathering
         locationFirestore.add(LocationModel(0.0,0.0,0f))
-        hrFireStore.add(HrModel(85))
+        hrFireStore.add(HrModel(78))
 
         if (accountFirebase.getUser().isNotEmpty()) {
             startActivity(Intent(baseContext, MainActivity::class.java))

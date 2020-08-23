@@ -12,6 +12,7 @@ import android.location.Location
 import android.net.Uri
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
@@ -31,8 +32,8 @@ import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
 
-    val sosFirestore = SosFireStore()
-    val accountFirestore = AccountInfoFireStore()
+    private val sosFirestore = SosFireStore()
+    private val accountFirestore = AccountInfoFireStore()
     private val locationFirestore = LocationFireStore()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 

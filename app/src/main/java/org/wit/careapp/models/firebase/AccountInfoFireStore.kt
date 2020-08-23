@@ -21,6 +21,7 @@ class AccountInfoFireStore() : AccountInfoStore, AnkoLogger {
         db.child("Users")
             .child(userId)
             .child("Settings")
+            .child("AccountInfo")
             .child("sosContactNumber")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
