@@ -1,14 +1,19 @@
 package org.wit.careapp.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class AccountInfoModel(
-    var id: Long = 0,
     var email: String = "",
-    var password: String = "",
     var carerName: String = "",
     var epName: String = "",
     var sosContactNumber: String = "",
-    var saveHrRangeHigh: Int = 0,
-    var saveHrRangeLow: Int = 0,
-    var saveHomeDistance: Int = 0,
-    var dailyStepsGoal: Int = 0
-)
+    var saveHrRangeHigh: String = "",
+    var saveHrRangeLow: String = "",
+    var saveHomeDistance: String = "",
+    var dailyStepsGoal: String = "",
+    var notificationResponseTime: String = "",
+    var registrationTokenCarer: String = "",
+    var registrationTokenPatient: String = "",
+    var location: LocationModel = LocationModel()): Parcelable
