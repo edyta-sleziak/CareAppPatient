@@ -16,4 +16,4 @@ data class AccountInfoModel(
     var notificationResponseTime: String = "",
     var registrationTokenCarer: String = "",
     var registrationTokenPatient: String = "",
-    var location: LocationModel = LocationModel()): Parcelable
+    var location: LocationModel ): Parcelable

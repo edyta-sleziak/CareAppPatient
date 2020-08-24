@@ -21,14 +21,12 @@ class LoginView : AppCompatActivity() {
     lateinit var context: Context
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var fireStore: AccountInfoFireStore? = null
-    private val locationFirestore = LocationFireStore()
     private val hrFireStore = HrFireStore()
     var accountFirebase = AccountInfoFireStore()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         //todo add data gathering
-        locationFirestore.add(LocationModel(0.0,0.0,0f))
         hrFireStore.add(HrModel(78))
 
         if (accountFirebase.getUser().isNotEmpty()) {
@@ -82,10 +80,8 @@ class LoginView : AppCompatActivity() {
         showProgress()
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-//                fireStore!!.fetchData {
                 hideProgress()
                 startActivity(Intent(baseContext, MainActivity::class.java))
-                //}
             } else {
                 toast("Sign Up Failed: ${task.exception?.message}")
                 hideProgress()
