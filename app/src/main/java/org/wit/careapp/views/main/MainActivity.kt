@@ -8,7 +8,9 @@ import org.jetbrains.anko.toast
 import android.content.Intent
 import android.content.IntentSender
 import android.net.Uri
+import android.os.PersistableBundle
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
@@ -26,19 +28,20 @@ import java.time.format.DateTimeFormatter
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.internal.ConnectionCallbacks
-import com.google.android.gms.common.api.internal.OnConnectionFailedListener
-import android.renderscript.Element.DataType
 import com.google.android.gms.fitness.Fitness
 import com.google.android.gms.fitness.request.OnDataPointListener
 import com.google.android.gms.fitness.request.SensorRequest
 import com.google.android.gms.common.ConnectionResult
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import com.google.android.gms.fitness.FitnessStatusCodes
+import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.fitness.data.DataPoint
 import com.google.android.gms.fitness.data.DataSource
+import com.google.android.gms.fitness.data.DataType
+import com.google.android.gms.fitness.data.Field
+import com.google.android.gms.fitness.request.DataSourcesRequest
+import com.google.android.gms.fitness.result.DataSourcesResult
+import org.wit.careapp.models.HrModel
+import org.wit.careapp.models.firebase.HrFireStore
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity(), OnDataPointListener,
@@ -52,6 +55,7 @@ GoogleApiClient.OnConnectionFailedListener {
     private val sosFirestore = SosFireStore()
     private val accountFirestore = AccountInfoFireStore()
     private val locationFirestore = LocationFireStore()
+    private val hrFireStore = HrFireStore()
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -61,12 +65,11 @@ GoogleApiClient.OnConnectionFailedListener {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState != null) {
-            authInProgress = savedInstanceState.getBoolean(AUTH_PENDING);
+            authInProgress = savedInstanceState.getBoolean(AUTH_PENDING)
         }
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
-                    .addApi(Fitness.SENSORS_API)  // Required for SensorsApi calls
-                    // Optional: specify more APIs used with additional calls to addApi
+                    .addApi(Fitness.SENSORS_API)
                     .useDefaultAccount()
                     .addScope(Fitness.SCOPE_ACTIVITY_READ_WRITE)
                     .addConnectionCallbacks(this)
@@ -93,10 +96,10 @@ GoogleApiClient.OnConnectionFailedListener {
         startLocationUpdates()
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
-            .addApi(Fitness.SENSORS_API)  // Required for SensorsApi calls
-            // Optional: specify more APIs used with additional calls to addApi
+            .addApi(Fitness.SENSORS_API)
             .useDefaultAccount()
-            .addScope(Fitness.SCOPE_ACTIVITY_READ_WRITE)
+            .addScope(Fitness.SCOPE_ACTIVITY_READ)
+            .addScope(Fitness.SCOPE_BODY_READ)
             .addConnectionCallbacks(this)
             .addOnConnectionFailedListener(this)
             .build()
@@ -149,14 +152,22 @@ GoogleApiClient.OnConnectionFailedListener {
         )
     }
 
-    override fun onConnected(connectionHint: Bundle?) {
-        Fitness.SensorsApi.add(
-            mGoogleApiClient,
-            SensorRequest.Builder()
-                .setDataType(com.google.android.gms.fitness.data.DataType.TYPE_HEART_RATE_BPM)
-                .build(),
-            this
-        )
+    override fun onConnected(bundle: Bundle?) {
+        Log.d("Fit", "connected")
+        val dataSourcesRequest = DataSourcesRequest.Builder()
+            .setDataTypes(DataType.TYPE_HEART_RATE_BPM)
+            .setDataSourceTypes(DataSource.TYPE_RAW)
+            .build()
+        val dataSourcesResultCallback = ResultCallback<DataSourcesResult> {
+            for (dataSource in it.dataSources) {
+                if (DataType.TYPE_HEART_RATE_BPM.equals(dataSource.getDataType())) {
+                    registerFitnessDataListener(dataSource, DataType.TYPE_HEART_RATE_BPM)
+                }
+            }
+        }
+        Fitness.SensorsApi.findDataSources(mGoogleApiClient, dataSourcesRequest)
+                .setResultCallback(dataSourcesResultCallback)
+
     }
 
     override fun onConnectionSuspended(i: Int) {
@@ -176,24 +187,37 @@ GoogleApiClient.OnConnectionFailedListener {
     }
 
     override fun onDataPoint(dataPoint: DataPoint) {
-        var fields = dataPoint.dataType.fields
-        Log.d("Google Fit fields", fields.toString())
+        val value = dataPoint.getValue(Field.FIELD_BPM)
+        Log.d("Google Fit fields", value.toString())
+        //hrFireStore.add(HrModel( value))
     }
 
     override fun onActivityResult(requestCode : Int, resultCode : Int, data: Intent? ) {
         super.onActivityResult(requestCode,resultCode,data)
         if( requestCode == REQUEST_OAUTH ) {
-        authInProgress = false
-        if( resultCode == RESULT_OK ) {
-            if( !mGoogleApiClient.isConnecting() && !mGoogleApiClient.isConnected() ) {
-                mGoogleApiClient.connect()
+            authInProgress = false
+            if( resultCode == RESULT_OK ) {
+                if( !mGoogleApiClient.isConnecting() && !mGoogleApiClient.isConnected() ) {
+                    mGoogleApiClient.connect()
+                }
+            } else if( resultCode == RESULT_CANCELED ) {
+                Log.e( "GoogleFit", "RESULT_CANCELED" )
             }
-        } else if( resultCode == RESULT_CANCELED ) {
-            Log.e( "GoogleFit", "RESULT_CANCELED" );
         }
-    } else {
-        Log.e("GoogleFit", "requestCode NOT request_oauth");
     }
-}
+    private fun registerFitnessDataListener(dataSource: DataSource, dataType: DataType) {
+        val request = SensorRequest.Builder()
+            .setDataSource(dataSource)
+            .setDataType(dataType)
+            .setSamplingRate(15, TimeUnit.SECONDS)
+            .build()
+        Log.d("Fitness.SensorsApi.add for :", dataSource.toString() + " type: " + dataSource.getDataType().getName())
+        Fitness.SensorsApi.add(mGoogleApiClient, request, this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(AUTH_PENDING, authInProgress)
+    }
 
 }
