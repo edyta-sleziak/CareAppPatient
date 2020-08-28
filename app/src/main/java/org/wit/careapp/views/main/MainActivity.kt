@@ -96,6 +96,14 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
             .build()
         mGoogleApiClient.connect()
 
+        val timer = Timer()
+        val checkRecords = object : TimerTask() {
+            override fun run() {
+                mGoogleApiClient.connect()
+            }
+        }
+        timer.schedule(checkRecords, 300000)
+
         SOS.setOnClickListener {
             toast("SOS alert sent! Your carer is already notified")
             val current = LocalDateTime.now()
@@ -170,11 +178,13 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks, G
                 val recordDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dataSet.dataPoints[size-1].getEndTime(TimeUnit.MILLISECONDS)), TimeZone.getDefault().toZoneId())
                 val time = recordDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 val existingRecords = hrFireStore.findRecordByDate(time)
-                if (existingRecords.value?.size == null) {
+                if (existingRecords.value?.size == 0) {
                     hrFireStore.add(HrModel(data.toInt(), time.toString()))
                     Log.d("HRRecord","Record with date $time added")
+                    mGoogleApiClient.disconnect()
                 } else {
                     Log.d("HRRecord","Record with date $time already exists. Record not added")
+                    mGoogleApiClient.disconnect()
                 }
             }
         }
